@@ -1,5 +1,4 @@
 import { createRoute, OpenAPIHono } from '@hono/zod-openapi'
-import { swaggerUI } from '@hono/swagger-ui'
 import {
   PostSchema,
   PostsSchema,
@@ -25,7 +24,8 @@ const getRoute = createRoute({
         }
       }
     }
-  }
+  },
+  tags: ['posts']
 })
 
 const postRoute = createRoute({
@@ -51,7 +51,8 @@ const postRoute = createRoute({
         }
       }
     }
-  }
+  },
+  tags: ['posts']
 })
 
 const app = new OpenAPIHono()
@@ -64,14 +65,6 @@ const app = new OpenAPIHono()
     posts.push(newPost)
     return c.json(newPost,201)
   })
-  .doc31('/doc', {
-    openapi: '3.1.0',
-    info: {
-      title: 'API',
-      version: '1.0.0'
-    },
-  })
-  .get('/swagger-ui', swaggerUI({ url: '/api/posts/doc' }))
 
 
 export default app
